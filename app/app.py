@@ -1,4 +1,3 @@
-# app/app.py
 from flask import Flask
 from routes.client_routes import client_routes
 from config import Config

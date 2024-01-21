@@ -1,4 +1,3 @@
-# app/services/client_service.py
 import mysql.connector
 
 class ClientService:
