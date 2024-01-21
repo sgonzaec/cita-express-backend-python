@@ -38,7 +38,7 @@ def get_sesion():
                 return jsonify({
                     'ok': False,
                     'message' : 'Datos incorrectos.'
-                }), 200
+                }), 400
 
         except Exception as e:
             print("Error en la autenticación:", str(e))

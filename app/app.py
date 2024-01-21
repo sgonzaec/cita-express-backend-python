@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from config import Config
 
 # imports
@@ -7,6 +8,8 @@ from routes.login_routes import login_routes
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+CORS(app)
 
 # Registrar las rutas de los clientes
 app.register_blueprint(client_routes)
