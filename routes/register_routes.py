@@ -3,7 +3,7 @@ from services.register_service import RegisterService
 
 register_routes = Blueprint('register_routes', __name__)
 
-with open('app/db_config.env.cfg', 'r') as secret:
+with open('db_config.env.cfg', 'r') as secret:
     host = secret.readline().strip()
     user = secret.readline().strip()
     password = secret.readline().strip()
