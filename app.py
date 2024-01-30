@@ -18,4 +18,4 @@ app.register_blueprint(login_routes)
 app.register_blueprint(register_routes)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
