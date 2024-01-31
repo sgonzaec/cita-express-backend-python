@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from services.client_service import ClientService
 
 client_routes = Blueprint('client_routes', __name__)
@@ -17,6 +17,9 @@ def get_clients():
         'password': password,
         'database': database
     }
+
+    dataUser = request.args.get('user')
+
     client_service = ClientService(db_config)
-    clients = client_service.get_all_clients()
-    return jsonify({'clients': clients})
+    client = client_service.get_client_data(dataUser)
+    return jsonify({'client': client})
