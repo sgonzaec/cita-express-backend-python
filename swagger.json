@@ -1,0 +1,264 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Docuemtnación para la app backend citaexpress",
+    "version": "1.0",
+    "title": "Swagger CitaExpress"
+  },
+  "host": "cita-express-backend-python.onrender.com",
+  "basePath": "",
+  "tags": [
+    {
+      "name": "Access",
+      "description": "Login / Register"
+    },
+    {
+      "name": "Clients",
+      "description": "Access to clients data"
+    },
+    {
+      "name": "Date",
+      "description": "Operations about dates"
+    }
+  ],
+  "schemes": ["https"],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Access"],
+        "summary": "login app",
+        "description": "",
+        "operationId": "LoginApp",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "formData",
+            "description": "client email",
+            "required": true,
+            "type": "string",
+            "format": "email"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "client data",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/AccessResponse"
+            }
+          },
+          "400": {
+            "description": "Error operation",
+            "schema": {
+              "$ref": "#/definitions/AccessResponse"
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": ["Access"],
+        "summary": "Register app",
+        "description": "",
+        "operationId": "RegisterApp",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "user",
+            "description": "client email",
+            "required": true,
+            "type": "string",
+            "format": "email"
+          },
+          {
+            "name": "password",
+            "description": "client password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_type",
+            "description": "client type",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/AccessResponse"
+            }
+          },
+          "400": {
+            "description": "Error operation",
+            "schema": {
+              "$ref": "#/definitions/AccessResponse"
+            }
+          }
+        }
+      }
+    },
+    "/api/clients": {
+      "get": {
+        "tags": ["Clients"],
+        "summary": "get client Info",
+        "description": "",
+        "operationId": "getClient",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ClientResponse"
+            }
+          },
+          "400": {
+            "description": "Error operation",
+            "schema": {
+              "$ref": "#/definitions/GeneralError"
+            }
+          }
+        }
+      }
+    },
+    "/countries": {
+      "get": {
+        "tags": ["Date"],
+        "summary": "get countries",
+        "description": "",
+        "operationId": "getCountries",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/CountriesList"
+            }
+          },
+          "400": {
+            "description": "Error operation",
+            "schema": {
+              "$ref": "#/definitions/GeneralError"
+            }
+          }
+        }
+      }
+    },
+    "/countries/:id": {
+      "get": {
+        "tags": ["Date"],
+        "summary": "get countries",
+        "description": "",
+        "operationId": "getCountries",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/CountriesList"
+            }
+          },
+          "400": {
+            "description": "Error operation",
+            "schema": {
+              "$ref": "#/definitions/GeneralError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AccessResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "ClientResponse": {
+      "type": "object",
+      "properties": {
+        "id_client": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "adress": {
+          "type": "string"
+        },
+        "cp": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    },
+    "CountriesList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID del país"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nombre del país"
+          }
+        }
+      }
+    },
+    "GeneralError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
