@@ -1,4 +1,5 @@
 import psycopg2
+import os
 import base64
 
 class ClientService:
@@ -10,17 +11,20 @@ class ClientService:
         self.cursor.execute("SELECT * FROM clients WHERE email = %s", (dataUser,))
         client = self.cursor.fetchone()
         if client:
+            id_client, name, lastname, email, phone, city, country, address, cp, image_bytes = client
+            image_base64 = base64.b64encode(image_bytes).decode('utf-8') if image_bytes else None
+
             responseBody = {
-                'id_client': client[0],
-                'name': client[1],
-                'lastname': client[2],
-                'email': client[3],
-                'phone': client[4],
-                'city': client[5],
-                'country': client[6],
-                'adress': client[7],
-                'cp': client[8],
-                # 'image': base64.b64encode(client[9]).decode('utf-8')
+                'id_client': id_client,
+                'name': name,
+                'lastname': lastname,
+                'email': email,
+                'phone': phone,
+                'city': city,
+                'country': country,
+                'address': address,
+                'cp': cp,
+                'image': image_base64
             }
             return responseBody
         else:
@@ -47,20 +51,17 @@ class ClientService:
             if self.db:
                 self.db.close()
 
-
-    # def save_image(self, image_path, user):
-        # try:
-        #     with open(image_path, "rb") as image_file:
-        #         image_binary = image_file.read()
-
-        #     self.cursor.execute("UPDATE clients SET image = %s WHERE email = %s", (image_binary, user))
-        #     responseBody = {
-        #         'message': 'La imagen se actualizó correctamente',
-        #         'ok': True
-        #     }
-        # except Exception as e:
-        #     responseBody = {
-        #         'error': f'Error al actualizar la imagen: {str(e)}',
-        #         'ok': False
-        #     }
-        # return responseBody
+    def save_image(self, image_data, user_email, ruta_guardado):
+        try:
+            query = "UPDATE clients SET image = %s WHERE email = %s"
+            self.cursor.execute(query, (psycopg2.Binary(image_data), user_email))
+            self.db.commit()
+            os.remove(ruta_guardado)
+            return {'message': 'La imagen se actualizó correctamente', 'ok': True}
+        except Exception as e:
+            return {'error': f'Error al actualizar la imagen: {str(e)}', 'ok': False}
+        finally:
+            if self.cursor:
+                self.cursor.close()
+            if self.db:
+                self.db.close()
