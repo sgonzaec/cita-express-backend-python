@@ -19,10 +19,12 @@ class RegisterService:
             print("El correo ya existe. No se puede agregar.")
             return -2
 
-        query = "INSERT INTO users (email, password_hash, user_type_id, is_active) VALUES (%s, %s, %s, TRUE)"
+        addUser = "INSERT INTO users (email, password_hash, user_type_id, is_active) VALUES (%s, %s, %s, TRUE)"
+        addclient = "INSERT INTO clients (email) VALUES (%s)"
         
         try:
-            self.cursor.execute(query, (user, password, user_type))
+            self.cursor.execute(addUser, (user, password, user_type))
+            self.cursor.execute(addclient, (user, ))
             self.db.commit() 
             return 1
         except psycopg2.Error as err:
