@@ -221,7 +221,7 @@
         "country": {
           "type": "string"
         },
-        "adress": {
+        "address": {
           "type": "string"
         },
         "cp": {

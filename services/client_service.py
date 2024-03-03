@@ -8,10 +8,15 @@ class ClientService:
         self.cursor = self.db.cursor()
 
     def get_client_data(self, dataUser):
-        self.cursor.execute("SELECT * FROM clients WHERE email = %s", (dataUser,))
+        query = ("SELECT clients.*, s.state_name AS city_name, co.country_name AS country_name FROM clients"
+                " LEFT JOIN states s ON clients.city = s.id::varchar"
+                " LEFT JOIN countries co ON s.country_location_id = co.id"
+                " WHERE clients.email = %s")
+
+        self.cursor.execute(query, (dataUser,))
         client = self.cursor.fetchone()
         if client:
-            id_client, name, lastname, email, phone, city, country, address, cp, image_bytes = client
+            id_client, name, lastname, email, phone, city, country, address, cp, image_bytes, city_name, country_name = client
             image_base64 = base64.b64encode(image_bytes).decode('utf-8') if image_bytes else None
 
             responseBody = {
@@ -20,19 +25,20 @@ class ClientService:
                 'lastname': lastname,
                 'email': email,
                 'phone': phone,
-                'city': city,
-                'country': country,
+                'city': city_name,
+                'country': country_name,
                 'address': address,
                 'cp': cp,
                 'image': image_base64
             }
+            
             return responseBody
         else:
             return {'error': 'Cliente no encontrado'}
 
     def update_client(self, data):
 
-        adress = data['adress']
+        address = data['address']
         cp = data['cp']
         email = data['email']
         lastname = data['lastname']
@@ -40,7 +46,7 @@ class ClientService:
         phone = data['phone']
 
         try:
-            self.cursor.execute("UPDATE clients SET name = %s, last_name = %s, phone = %s, adress = %s, cp = %s WHERE email = %s;", (name, lastname, phone, adress, cp, email))
+            self.cursor.execute("UPDATE clients SET name = %s, last_name = %s, phone = %s, address = %s, cp = %s WHERE email = %s;", (name, lastname, phone, address, cp, email))
             self.db.commit()
         except psycopg2.Error as e:
             print(f"Error al ejecutar la consulta: {e}")
