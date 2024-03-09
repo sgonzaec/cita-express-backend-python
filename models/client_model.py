@@ -32,3 +32,10 @@ class Services:
         self.name_service = name_service
         self.category_type = category_type
 
+class states:
+    def __init__(self, id, country_location_id, state_name):
+        self.id = id
+        self.country_location_id = country_location_id
+        self.state_name = state_name
+
+class 
