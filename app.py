@@ -8,6 +8,7 @@ from routes.client_routes import client_routes
 from routes.login_routes import login_routes
 from routes.register_routes import register_routes
 from routes.location_routes import location_routes
+from routes.appoiments_routes import appoiments_routes
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -23,6 +24,7 @@ app.register_blueprint(client_routes)
 app.register_blueprint(login_routes)
 app.register_blueprint(register_routes)
 app.register_blueprint(location_routes)
+app.register_blueprint(appoiments_routes)
 
 if __name__ == '__main__':
     app.run(debug=True)
