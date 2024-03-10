@@ -9,7 +9,9 @@ class LocationService:
         self.cursor.execute("SELECT "
                             "    a.id_appointment, "
                             "    c.name AS client_name, "
-                            "    s.name AS supplier_name, "
+                            "    CONCAT(s.name, ' ', s.last_name) AS supplier_name, "
+                            "    s.phone AS supplier_phone, "
+                            "    s.cp AS supplier_cp, "
                             "    srv.name_service AS service_name, "
                             "    a.note, "
                             "    co.country_name AS country_name, "
@@ -28,10 +30,12 @@ class LocationService:
                 'id_appoiment': appoiemt[0],
                 'id_client': appoiemt[1],
                 'id_supplier': appoiemt[2],
-                'service_type': appoiemt[3],
-                'note': appoiemt[4],
-                'country': appoiemt[5],
-                'city': appoiemt[6],
+                'supplier_phone': appoiemt[3],
+                'supplier_cp': appoiemt[4],
+                'service_type': appoiemt[5],
+                'note': appoiemt[6],
+                'country': appoiemt[7],
+                'city': appoiemt[8],
             } for appoiemt in appoiments]
             return response_body
         else:
