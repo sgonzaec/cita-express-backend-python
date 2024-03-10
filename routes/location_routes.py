@@ -27,3 +27,25 @@ def get_countries(country_id=None):
         countries = location_service.get_countries(country_id)
 
     return jsonify({'countries': countries})
+
+
+@location_routes.route('/countries/<int:country_id>/states', methods=['GET'])
+def getState(country_id=None):
+    db_config = {
+        'host': host,
+        'user': user,
+        'password': password,
+        'database': database
+    }
+
+    location_service = LocationService(db_config)
+
+    if country_id is None:
+        return jsonify({
+                    'ok': False,
+                    'message' : 'Debe indicar un Pais.'
+                }), 400
+    else:
+        states = location_service.get_states(country_id)
+
+    return jsonify({'states': states})

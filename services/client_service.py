@@ -42,11 +42,13 @@ class ClientService:
         cp = data['cp']
         email = data['email']
         lastname = data['lastname']
+        country = data['country']
+        city = data['city']
         name = data['name']
         phone = data['phone']
 
         try:
-            self.cursor.execute("UPDATE clients SET name = %s, last_name = %s, phone = %s, address = %s, cp = %s WHERE email = %s;", (name, lastname, phone, address, cp, email))
+            self.cursor.execute("UPDATE clients SET name = %s, last_name = %s, phone = %s, country = %s, address = %s, state = %s, cp = %s WHERE email = %s;", (name, lastname, phone, country, city, address, cp, email))
             self.db.commit()
         except psycopg2.Error as e:
             print(f"Error al ejecutar la consulta: {e}")

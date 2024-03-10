@@ -28,3 +28,16 @@ class LocationService:
                 return response_body
             else:
                 return {'error': 'País no encontrado'}
+
+    def get_states(self, country_id=None):
+        self.cursor.execute("SELECT * FROM states WHERE country_location_id = %s", (country_id, ))
+        states = self.cursor.fetchall()
+        if states:
+            response_body = [{
+                'id': state[0],
+                'country_id': state[1],
+                'name': state[2],
+            } for state in states]
+            return response_body
+        else:
+            return {'error': 'Departamento/Provincia no encontrados'}
