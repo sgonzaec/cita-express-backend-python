@@ -5,16 +5,3 @@ class Client:
         self.email = email
         self.password = password
 
-
-
-
-
-
-
-
-         
-
-
-
-
-
