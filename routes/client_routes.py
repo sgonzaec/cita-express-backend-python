@@ -39,7 +39,6 @@ def update_client():
     client_service = ClientService(db_config)
     try:
         updateClientReasponse = client_service.update_client(data)
-        print(updateClientReasponse)
 
     except Exception as e:
         print("Error en la autenticación:", str(e))
